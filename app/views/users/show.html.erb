@@ -1,30 +1,20 @@
+<p id="notice">Welcome! You have signed up successfully.</p>
 <div class='container px-5 px-sm-0'>
 	<div class='row'>
 	  <div class='col-md-3'>
-	    <h2>User info</h2>
-	    <!-- モックのため、固定値や未実装になっている部分があります。アプリ完成前に修正しましょう。 -->
-	    <table class='table'>
-	      <tr>
-	        <%= image_tag 'default-image.jpg' %>  <!-- 固定値 -->
-	      </tr>
-	      <tr>
-	        <th>name</th>
-	        <th>DMM太郎</th>  <!-- 固定値 -->
-	      </tr>
-	      <tr>
-	        <th>introduction</th>
-	        <th></th>  <!-- 固定値 -->
-	      </tr>
-	    </table>　
-	    <div class='row'>
-	      <!-- 編集リンクが未実装 -->
-	    </div>
-	    <h2 class="mt-3">New book</h2>
-	    <!-- form_withを用いて新規投稿フォームを作成しましょう。 -->
+			<%= render 'info', user: @user %>
+	  	<%= render 'newbook' %>
 	  </div>
 	  <div class='col-md-8 offset-md-1'>
 	    <h2>Books</h2>
-	    <!-- 投稿した書籍一覧表示を作成しましょう。 -->
+			<% @books.each do |book| %>
+			<div>
+
+				<p>投稿ユーザー画像：<%= image_tag book.user.get_profile_image(100,100) %></p>
+  			<p>Title：<%= book.title %></p>
+  			<p>Opinion：<%= book.body %></p>
+			</div>
+			<% end %>
 	    <table class='table table-hover table-inverse'>
 	      <thead>
 	        <tr>
