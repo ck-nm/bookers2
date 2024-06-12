@@ -12,10 +12,15 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>   <!-- ここを追記 -->
-    <main>                           <!-- ここを追記 -->
-     <%= yield %>
-    </main>                          <!-- ここを追記 -->
-    <%= render 'layouts/footer' %>   <!-- ここを追記 -->
+    <%= render 'layouts/header' %>
+    <main>
+    <div>
+       <% flash.each do |message_type, message| %>
+      <div class="flash-message <%= message_type %>"><%= message %></div>
+    <% end %>
+    </div>
+    <%= yield %>
+    </main>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

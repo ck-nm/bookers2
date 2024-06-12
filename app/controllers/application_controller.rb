@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     about_path
   end
-  # サインアウトした後どこに飛ぶかの記述
+  
   protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email])
