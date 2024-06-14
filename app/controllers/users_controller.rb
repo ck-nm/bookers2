@@ -1,12 +1,11 @@
 class UsersController < ApplicationController
    before_action :is_matching_login_user, only: [:edit, :update]
+   
   def create
        @user = User.new(user_params)
      if @user.save
-        flash[:notice] = "投稿に成功しました。"
        redirect_to user_path(@user.id)
      else
-       flash.now[:notice] = "投稿に失敗しました。"
        render :users
      end
   end
@@ -32,7 +31,7 @@ class UsersController < ApplicationController
         else
          render :edit
         end
-    end
+  end
   def destroy
     @user.destroy
     redirect_to root_path
@@ -49,4 +48,5 @@ private
       redirect_to user_path
     end
    end
+   
 end
