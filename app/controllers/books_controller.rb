@@ -1,4 +1,8 @@
 class BooksController < ApplicationController
+  before_action :is_matching_login_user, only: [:sho, :update]
+  before_action :authenticate_user!, except: [:top, :about]
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
 
   def create
     @book = Book.new(book_params)
@@ -28,12 +32,9 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-
     if @book.update(book_params)
      redirect_to book_path(@book.id)
-     flash[:notice] = "successfully"
     else
-
       render :edit
     end
 

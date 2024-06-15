@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-   before_action :is_matching_login_user, only: [:edit, :update]
-   
+    before_action :is_matching_login_user, only: [:edit, :update]
+    before_action :authenticate_user!, except: [:top, :about]
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
   def create
        @user = User.new(user_params)
      if @user.save
@@ -26,11 +28,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-        if User.update(user_params)
-         redirect_to user_path(@user.id)
-        else
-         render :edit
-        end
+    if @user.update(user_params)
+        redirect_to user_path(@user.id)
+    else
+        render :edit
+    end
   end
   def destroy
     @user.destroy
@@ -48,5 +50,5 @@ private
       redirect_to user_path
     end
    end
-   
+
 end
