@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :is_matching_login_user, only: [:sho, :update]
+  before_action :is_matching_login_user, only: [:edit, :update]
   before_action :authenticate_user!, except: [:top, :about]
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -12,6 +12,7 @@ class BooksController < ApplicationController
      flash[:notice] = "successfully"
     else
       @books = Book.all
+      @user = current_user
       render :index
     end
   end
@@ -19,11 +20,12 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
     @book = Book.new
-
+    @user = current_user
   end
 
   def show
     @book = Book.find(params[:id])
+    @user = @book.user
   end
 
   def edit
