@@ -5,22 +5,22 @@
 	  	<%= render 'users/newbook' %>
 	  </div>
 	  <div class='col-md-8 offset-md-1'>
-	    <h2>Books</h2>
-		<div>
+	    <h2>Book detail</h2>
 		<table class='table table-hover table-inverse'>
-	      <thead>
+	     
+	      <tbody>
 	        <tr>
-	          <th></th>
-	          <p><%= image_tag @book.user.get_profile_image(100,100) %></p>
-	          <th>Title</th>
-	          <%= @book.title %>
-	          <th>Opinion</th>
-	          <%= @book.body %>
-	          <th colspan="3"></th>
-
+	         <td>
+	           <%= image_tag book.user.get_profile_image(100,100) %>
+	         </td>
+	         <td><%= link_to book_path(book.id) do %>
+	         	<%= book.title %>
+	         	<% end %>
+	         </td>
+	         <td><%= book.body %></td>
 	        </tr>
-	      </thead>
-	      <tbody></tbody>
+	        	<% end %>
+	      </tbody>
 	    </table>
 	  </div>
 	</div>
