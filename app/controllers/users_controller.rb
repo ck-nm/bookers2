@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-    before_action :is_matching_login_user, only: [:edit, :update]
-    before_action :authenticate_user!, except: [:top, :about]
     before_action :configure_permitted_parameters, if: :devise_controller?
+    before_action :is_matching_login_user, only: [:edit, :update]
 
   def create
        @user = User.new(user_params)
      if @user.save
+       flash[:notice] = "You have updated user successfully."
        redirect_to user_path(@user.id)
      else
        render :users
@@ -25,13 +25,14 @@ class UsersController < ApplicationController
   end
 
   def edit
-      @user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-        redirect_to user_path(@user.id)
+        flash[:notice] = "You have updated user successfully."
+        redirect_to user_path(current_user)
     else
         render :edit
     end
@@ -46,11 +47,12 @@ private
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image )
   end
-   def is_matching_login_user
+
+  def is_matching_login_user
     user = User.find(params[:id])
     unless user.id == current_user.id
-      redirect_to user_path
+      redirect_to user_path(current_user)
     end
-   end
+  end
 
 end

@@ -1,7 +1,6 @@
 class BooksController < ApplicationController
-  before_action :is_matching_login_user, only: [:edit, :update]
-  before_action :authenticate_user!, except: [:top, :about]
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :is_matching_login_user, only: [:edit, :update]
 
 
   def create
@@ -37,20 +36,19 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     if @book.update(book_params)
-     redirect_to book_path(@book.id)
+      flash[:notice] = "successfully"
+      redirect_to book_path(@book.id)
     else
+
       render :edit
     end
-
   end
 
-  # 削除機能
   def destroy
     book = Book.find(params[:id])
     book.destroy
     redirect_to '/books'
   end
-
 
    private
 
